@@ -36,6 +36,7 @@ You can easy check errors via log file(default *./backup.log*)
 ```
 其中：
 - *server_ip*：远端(备份)服务器的ip
+- *~~server_port~~*： 远端(备份)服务器为22,即ssh端口。
 - *remote_dir*: 远端(备份)服务器的目的目录
 - *user_name*: 登录远端服务器的账户名
 - *user_password*: 登录远端服务器的密码
@@ -43,7 +44,7 @@ You can easy check errors via log file(default *./backup.log*)
 - *local_files*: 本地备份文件的位置
 
 **技术细节注解:**
-> 1. 文件夹的路径可以随意设置,但最好是你需要备份的本地目录位置(最后的分隔符选择加与不加都随意).
+> 1. 文件夹的路径可以随意设置,但最好是你需要备份的目录位置(最后的分隔符选择加与不加都随意).
 
 > 2. 本地可以为任意平台(E.g. windows, linux), 备份服务器需为linux系统.
 
