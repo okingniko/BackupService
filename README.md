@@ -54,3 +54,17 @@ You can easy check errors via log file(default *./backup.log*)
 **建设中...**
 
 ##3. Demo
+###3.1 Windows 
+![Windows backup](/media/window_backup.gif)
+
+###3.2 Linux 
+![Linux backup](/media/linux_backup.gif)
+
+##4. TODO：
+1. Add Download Mode.
+2. Add CMD Argument parsing Or Add Graphical interface.
+3. Etc.
+
+##5. 参考链接
+- [python paramiko简介和使用方法](http://www.codexiu.cn/python/blog/127/)
+- [Paramiko Documentation](http://docs.paramiko.org/en/1.16/)
