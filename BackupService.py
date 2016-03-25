@@ -56,50 +56,50 @@ class Backup():
             user_passwd = back_conf['user_password']
             # print type(local_dir), server_ip, server_port, type(remote_dir), user_name, user_passwd
 
-        try:
-            t = paramiko.Transport((server_ip, server_port))
-            t.connect(username=user_name, password=user_passwd)
-            sftp = paramiko.SFTPClient.from_transport(t)
-
-            # if remote_dir not exist, make it.
             try:
-                sftp.normalize(remote_dir)
-            except Exception as e:
-                sftp.mkdir(remote_dir)
-
-            # backup local files
-            for localf in local_files:
-                remote_file = os.path.join(remote_dir, os.path.split(localf)[1])
+                t = paramiko.Transport((server_ip, server_port))
+                t.connect(username=user_name, password=user_passwd)
+                sftp = paramiko.SFTPClient.from_transport(t)
+    
+                # if remote_dir not exist, make it.
                 try:
-                    sftp.put(localf, remote_file)
+                    sftp.normalize(remote_dir)
                 except Exception as e:
-                    logging.error("Backup localfile %s: %s", localf, e)
-                    print "ERROR: Backup localfile %s: %s" % (localf, e)
-                logging.info("Backup localfile %s to %s on %s ...", localf, remote_file, server_ip)
-                print "INFO: Backup localfile %s to %s on %s ..." % (localf, remote_file, server_ip)
-
-            # backup files under local_dir(recursively).
-            for root, dirs, files in os.walk(local_dir):
-                for f in files:
-                    local_file = os.path.join(root, f)
-                    relative_path = local_file.replace(local_dir,'').replace('\\', '/')
-                    remote_file = os.path.join(remote_dir, relative_path)
-                    # print local_file, type(relative_path), remote_file
+                    sftp.mkdir(remote_dir)
+    
+                # backup local files
+                for localf in local_files:
+                    remote_file = os.path.join(remote_dir, os.path.split(localf)[1])
                     try:
-                        sftp.put(local_file, remote_file)
+                        sftp.put(localf, remote_file)
                     except Exception as e:
-                        remote_curr_dir = os.path.split(remote_file)[0]
-                        sftp.mkdir(remote_curr_dir)
-                        logging.info("Create directory %s on %s ...",remote_curr_dir, server_ip)
-                        print "INFO: Create directory %s on %s ..." % (remote_curr_dir, server_ip)
-                        sftp.put(local_file, remote_file)
-
-                    logging.info("Backup localfile %s to %s on %s ...",local_file, remote_file, server_ip)
-                    print "INFO: Backup localfile %s to %s on %s ..." % (local_file, remote_file, server_ip)
-            t.close()
-        except Exception as e:
-            logging.error("Remote host %s %s",server_ip, e)
-            print "ERROR: Remote host %s %s" % (server_ip, e)
+                        logging.error("Backup localfile %s: %s", localf, e)
+                        print "ERROR: Backup localfile %s: %s" % (localf, e)
+                    logging.info("Backup localfile %s to %s on %s ...", localf, remote_file, server_ip)
+                    print "INFO: Backup localfile %s to %s on %s ..." % (localf, remote_file, server_ip)
+    
+                # backup files under local_dir(recursively).
+                for root, dirs, files in os.walk(local_dir):
+                    for f in files:
+                        local_file = os.path.join(root, f)
+                        relative_path = local_file.replace(local_dir,'').replace('\\', '/')
+                        remote_file = os.path.join(remote_dir, relative_path)
+                        # print local_file, type(relative_path), remote_file
+                        try:
+                            sftp.put(local_file, remote_file)
+                        except Exception as e:
+                            remote_curr_dir = os.path.split(remote_file)[0]
+                            sftp.mkdir(remote_curr_dir)
+                            logging.info("Create directory %s on %s ...",remote_curr_dir, server_ip)
+                            print "INFO: Create directory %s on %s ..." % (remote_curr_dir, server_ip)
+                            sftp.put(local_file, remote_file)
+    
+                        logging.info("Backup localfile %s to %s on %s ...",local_file, remote_file, server_ip)
+                        print "INFO: Backup localfile %s to %s on %s ..." % (local_file, remote_file, server_ip)
+                t.close()
+            except Exception as e:
+                logging.error("Remote host %s %s",server_ip, e)
+                print "ERROR: Remote host %s %s" % (server_ip, e)
 
 class Download:
     def __init__(self, conf_file='./MainConf.json'):
