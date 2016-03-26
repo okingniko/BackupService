@@ -21,7 +21,7 @@ import os
 import json
 import logging
 
-class Backup():
+class Backup:
     def __init__(self, conf_file='./MainConf.json',log_file='./backup.log'):
         self.conf_file = conf_file
         self.log_file = log_file
