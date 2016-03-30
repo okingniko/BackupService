@@ -54,16 +54,25 @@ You can easy check errors via log file(default *./backup.log*)
 ###2.2 Download method
 **建设中...**
 
-##3. Demo
-###3.1 Windows 
+##3. 设置定时备份
+
+使用编辑器(E.g. vim)打开`/etc/crontab` 文件，加入以下一行内容
+```shell
+0 2 * * * python path-to-the-backupservice -b > /dev/null
+```
+> - path-to-backupservice: 为BackupService.py在你系统上的绝对路径(E.g. /home/monster/BackupService/BackupService.py)
+> - 上述行的意思是： 每日凌晨两点执行代码备份工作（crontab中有相应说明）
+
+##4. Debug version Demo
+###4.1 Windows 
 ![Windows backup](/media/window_backup.gif)
 
-###3.2 Linux 
+###4.2 Linux 
 ![Linux backup](/media/linux_backup.gif)
 
 ##4. TODO：
 1. Add Download Mode.
-2. Add CMD Argument parsing Or Add Graphical interface.
+~~2. Add CMD Argument parsing Or Add Graphical interface.~~
 3. Etc.
 
 ##5. 参考链接
