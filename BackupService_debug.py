@@ -9,19 +9,18 @@
 #            Output log can be seen at ./backup.log(default backup log file)
 # Changelog:
 #   1. 3/23/2016 Initialization and Add Backup Mode.
-#   2. 3/30/2016 Fix Some border situation And Add CMD argument parsing.
 # TODO:
 #   1. Add Download Mode.
-#   2. Etc.
+#   2. Add CMD Argument parsing Or Add Graphical interface.
+#   3. Etc.
 # Contribution: xxli(testing)
 #
 
 import paramiko
 import os
-import sys
 import json
 import logging
-import datetime
+import datatime
 import getopt
 
 class Backup:
@@ -52,12 +51,12 @@ class Backup:
             server_port = 22
             remote_dir = back_conf['remote_dir'].encode('utf-8')
             # remote server under linux environ.
-            if remote_dir == '' or (remote_dir != '' and remote_dir[-1] != '/'):
+            if remote_dir == '' or (remote_dir != '' and remote_dir[-1] != '/')
                 remote_dir += '/'
             
             # add the current date for the code backup.
             remote_dir += datetime.date.today().isoformat()
-             
+            
             user_name = back_conf['user_name']
             user_passwd = back_conf['user_password']
             # print type(local_dir), server_ip, server_port, type(remote_dir), user_name, user_passwd
@@ -115,7 +114,7 @@ class Download:
         print "Download Method are under construction..."
         pass
 
-def usage():
+def printintro():
     print '''
              * ,MMM8&&&.            *
                   MMMM88&&&&&    .
@@ -139,52 +138,35 @@ def usage():
   |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
   |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 
-  Usage:
-    -h, --help : Print this help.
-    -b, --backup: Backup Method
-    -d, --download : download Method
-    -c, --conf <filename> : Set MainConf file(json format, default ./MainConf.json)
-    -o, --outlog <filename> : Set Outlog file(default ./backup.log)
+  Please Choose the Number of the method:
+    1. Backup
+    2. Download
+    3. :-)
   '''
 
+def usage():
+    pass
+
 def main():
-    if len(sys.argv) < 2:
-        usage()
-        sys.exit()
-    # arg parse
-    try:
-        opts, args = getopt.getopt(sys.argv[1:], "hbdc:o:", 
-                                   ["help", "backup", "download", "conf=", "outlog="])
-    except getopt.GetoptError as e:
-        print "ERROR: %s" % e
-        usage()
-        sys.exit(2)
-    main_conf = ''
-    out_log = ''
-    method = []
-    for o, a in opts:
-        if o in ("-h", "--help"):
-            usage()
-            sys.exit()
-        elif o in ("-b", "--backup"):
-            method.append('backup')
-        elif o in ("-d", "--download"):
-            method.append('download')
-        elif o in ("-c", "--conf"):
-            main_conf = a
-        elif o in ("-o", "--outlog"):
-            out_log = a
-        else:
-            assert False, "unhandled option"
+    printintro()
     
-    # Prog logic
-    if 'backup' in method:
+    try:
+        num = int(input("The number: "))
+    except Exception as e:
+        print "ERROR: %s" % e
+
+    if num == 1:
         backup = Backup()
         backup.run()
-    if 'download' in method:
+    elif num == 2:
         download = Download()
         download.run()
+    elif num == 3:
+        print "If you have any idea, Please contact me at zrwang1993@126.com"
+    else:
+        print "Please follows the instructions..."
 
-     
+    print "More details can be seen at 'backup.log'..."
+
 if __name__ == '__main__':
     main()

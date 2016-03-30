@@ -1,10 +1,10 @@
 {
   "backup_conf" : [
     {
-      "server_ip": "211.65.193.193",
-      "remote_dir": "/root/backuptest",
-      "user_name": "root",
-      "user_password": "XXXXXXX",
+      "server_ip": "211.65.193.61",
+      "remote_dir": "/backup/daily/wangzhuoran",
+      "user_name": "wangzhuoran",
+      "user_password": "wangzhuoran123",
       "local_dir": "/home/monster/BackupService",
       "local_files": ["/home/monster/bro_start.sh", 
                       "/home/monster/paramiko.tar.gz",
