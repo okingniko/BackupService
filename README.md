@@ -37,7 +37,7 @@ You can easy check errors via log file(default *./backup.log*)
 其中：
 - *server_ip*：远端(备份)服务器的ip
 - *~~server_port~~*： 远端(备份)服务器为22,即ssh端口。
-- *remote_dir*: 远端(备份)服务器的目的目录
+- *remote_dir*: 远端(备份)服务器的目的目录, 程序将自动根据当前日期创建子目录。
 - *user_name*: 登录远端服务器的账户名
 - *user_password*: 登录远端服务器的密码
 - *local_dir*: 本地备份文件夹的位置
