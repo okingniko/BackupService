@@ -62,6 +62,7 @@ You can easy check errors via log file(default *./backup.log*)
 ```
 > - path-to-backupservice: 为BackupService.py在你系统上的绝对路径(E.g. /home/monster/BackupService/BackupService.py)
 > - 上述行的意思是： 每日凌晨两点执行代码备份工作（crontab中有相应说明）
+> - 若想查看BackService.py的完整用法，可使用`-h`或`--help`参数查看
 
 ##4. Debug version Demo
 ###4.1 Windows 
@@ -72,7 +73,7 @@ You can easy check errors via log file(default *./backup.log*)
 
 ##4. TODO：
 1. Add Download Mode.
-~~2. Add CMD Argument parsing Or Add Graphical interface.~~
+2. ~~Add CMD Argument parsing Or Add Graphical interface.~~
 3. Etc.
 
 ##5. 参考链接
