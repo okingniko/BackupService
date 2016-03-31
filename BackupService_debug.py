@@ -3,16 +3,16 @@
 #
 # Author: zrwang(zrwang1993@126.com)
 # Program:
-#   1. Backup(Upload) files to the specified server.
-#   2. Download necessary files from server.
-#   3. Tips: Appropriate setting can be seen at ./MainConf.json(default conf file)
-#            Output log can be seen at ./backup.log(default backup log file)
+#    1. Backup(Upload) files to the specified server.
+#    2. Download necessary files from server.
+#    3. Tips: Appropriate setting can be seen at ./MainConf.json(default conf file)
+#             Output log can be seen at ./backup.log(default backup log file)
 # Changelog:
-#   1. 3/23/2016 Initialization and Add Backup Mode.
+#    1. 3/23/2016 Initialization and Add Backup Mode.
 # TODO:
-#   1. Add Download Mode.
-#   2. Add CMD Argument parsing Or Add Graphical interface.
-#   3. Etc.
+#    1. Add Download Mode.
+#    2. Add CMD Argument parsing Or Add Graphical interface.
+#    3. Etc.
 # Contribution: xxli(testing)
 #
 
@@ -20,7 +20,7 @@ import paramiko
 import os
 import json
 import logging
-import datatime
+import datetime
 import getopt
 
 class Backup:
@@ -51,7 +51,7 @@ class Backup:
             server_port = 22
             remote_dir = back_conf['remote_dir'].encode('utf-8')
             # remote server under linux environ.
-            if remote_dir == '' or (remote_dir != '' and remote_dir[-1] != '/')
+            if remote_dir == '' or (remote_dir != '' and remote_dir[-1] != '/'):
                 remote_dir += '/'
             
             # add the current date for the code backup.
@@ -89,7 +89,7 @@ class Backup:
                         local_file = os.path.join(root, f)
                         relative_path = local_file.replace(local_dir,'').replace('\\', '/')
                         remote_file = os.path.join(remote_dir, relative_path)
-                        # print local_file, type(relative_path), remote_file
+                        print local_file, relative_path, remote_file
                         try:
                             sftp.put(local_file, remote_file)
                         except Exception as e:
@@ -101,6 +101,17 @@ class Backup:
     
                         logging.info("Backup localfile %s to %s on %s ...",local_file, remote_file, server_ip)
                         print "INFO: Backup localfile %s to %s on %s ..." % (local_file, remote_file, server_ip)
+                    for d in dirs:
+                        local_path = os.path.join(root, d)
+                        relative_path = local_path.replace(local_dir, '').replace('\\', '/')
+                        remote_path = os.path.join(remote_dir, relative_path)
+                        try:
+                            sftp.mkdir(remote_path)
+                            logging.info("Create directory %s on %s ...", remote_path, server_ip)
+                            print "INFO: Create directory %s on %s ... " % (remote_path, server_ip)
+                        except Exception as e:
+                            logging.error("%s", e)
+                            print "ERROR: %s ... " % (e)
                 t.close()
             except Exception as e:
                 logging.error("Remote host %s %s",server_ip, e)
@@ -117,26 +128,26 @@ class Download:
 def printintro():
     print '''
              * ,MMM8&&&.            *
-                  MMMM88&&&&&    .
+                  MMMM88&&&&&     .
                  MMMM88&&&&&&&
-     *           MMM88&&&&&&&&
+     *             MMM88&&&&&&&&
                  MMM88&&&&&&&&
                  'MMM88&&&&&&'
                    'MMM8&&&'      *
           |\___/|
-          )     (             .              '
-         =\     /=
+          )        (              .                 '
+         =\        /=
            )===(       *
-          /     \
-          |     |
-         /       \
-         \       /
+          /        \
+          |        |
+         /         \
+         \         /
   _/\_/\_/\__  _/_/\_/\_/\_/\_/\_/\_/\_/\_/\_
-  |  |  |  |( (  |  |  |  |  |  |  |  |  |  |
-  |  |  |  | ) ) |  |  |  |  |  |  |  |  |  |
-  |  |  |  |(_(  |  |  |  |  |  |  |  |  |  |
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+  |  |    |  |( (  |    |  |  |  |    |  |  |  |    |
+  |  |    |  | ) ) |    |  |  |  |    |  |  |  |    |
+  |  |    |  |(_(  |    |  |  |  |    |  |  |  |    |
+  |  |    |  |  |  |    |  |  |  |    |  |  |  |    |
+  |  |    |  |  |  |    |  |  |  |    |  |  |  |    |
 
   Please Choose the Number of the method:
     1. Backup
