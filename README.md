@@ -58,10 +58,14 @@ You can easy check errors via log file(default *./backup.log*)
 
 使用编辑器(E.g. vim)打开`/etc/crontab` 文件，加入以下一行内容
 ```shell
-0 2 * * * python path-to-the-backupservice -b > /dev/null
+0 2 * * * username . /path/to/Runbackup.sh /path/to
 ```
-> - path-to-backupservice: 为BackupService.py在你系统上的绝对路径(E.g. /home/monster/BackupService/BackupService.py)
-> - 上述行的意思是： 每日凌晨两点执行代码备份工作（crontab中有相应说明）
+e.g 在我的主机上配置成: 
+```shell
+0 2 * * * monster . /home/monster/BackupService/RunBackup.sh /home/monster/BackupService
+```
+> - 上述行的意思是： 每日凌晨两点执行代码备份工作
+> - `RunBackup.sh`的作用主要是为了处理读取配置文件时相对路径的问题,当然也可以配置`/etc/crontab`中的`PATH`变量
 > - 若想查看BackService.py的完整用法，可使用`-h`或`--help`参数查看
 
 ##4. Debug version Demo
