@@ -37,7 +37,7 @@ You can easy check errors via log file(default *./backup.log*)
 其中：
 - *server_ip*：远端(备份)服务器的ip
 - *~~server_port~~*： 远端(备份)服务器为22,即ssh端口。
-- *remote_dir*: 远端(备份)服务器的目的目录
+- *remote_dir*: 远端(备份)服务器的目的目录, 程序将自动根据当前日期创建子目录。
 - *user_name*: 登录远端服务器的账户名
 - *user_password*: 登录远端服务器的密码
 - *local_dir*: 本地备份文件夹的位置
@@ -54,16 +54,26 @@ You can easy check errors via log file(default *./backup.log*)
 ###2.2 Download method
 **建设中...**
 
-##3. Demo
-###3.1 Windows 
+##3. 设置定时备份
+
+使用编辑器(E.g. vim)打开`/etc/crontab` 文件，加入以下一行内容
+```shell
+0 2 * * * python path-to-the-backupservice -b > /dev/null
+```
+> - path-to-backupservice: 为BackupService.py在你系统上的绝对路径(E.g. /home/monster/BackupService/BackupService.py)
+> - 上述行的意思是： 每日凌晨两点执行代码备份工作（crontab中有相应说明）
+> - 若想查看BackService.py的完整用法，可使用`-h`或`--help`参数查看
+
+##4. Debug version Demo
+###4.1 Windows 
 ![Windows backup](/media/window_backup.gif)
 
-###3.2 Linux 
+###4.2 Linux 
 ![Linux backup](/media/linux_backup.gif)
 
 ##4. TODO：
 1. Add Download Mode.
-2. Add CMD Argument parsing Or Add Graphical interface.
+2. ~~Add CMD Argument parsing Or Add Graphical interface.~~
 3. Etc.
 
 ##5. 参考链接
